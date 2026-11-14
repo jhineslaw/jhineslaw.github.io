@@ -63,7 +63,17 @@ footer.site a{color:#f0dcb4}
 footer.site p{margin:.5rem 0}
 .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .small{font-size:.95rem;color:var(--muted)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2.5rem;align-items:center}
+.hero-photo{display:block}
+.hero-photo img{display:block;width:100%;height:auto;border-radius:8px;border:3px solid var(--gold)}
+.about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:2rem;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:1.25rem;margin:2rem 0}
+.about-photo img{display:block;width:100%;height:auto;border-radius:6px}
+.about-text h2{margin-top:0}
+.about-text p{margin:.5rem 0}
 @media (max-width:760px){
+ .hero-grid,.about{grid-template-columns:1fr;gap:1.25rem}
+ .hero-photo{max-width:200px;justify-self:center;grid-row:1}
+ .about{padding:1rem}
  h1{font-size:1.75rem}
  .cards,.cards-5,.cards.contact-cards,.steps,.foot-grid{grid-template-columns:1fr}
  .cards-5 .card,.cards-5 .card:nth-child(4),.cards-5 .card:nth-child(5){grid-column:auto}
