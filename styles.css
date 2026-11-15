@@ -1,32 +1,167 @@
-:root{--navy:#162033;--ink:#1c2430;--paper:#f7f4ee;--card:#fffcf7;--muted:#5b6570;--gold:#c4a36a;--link:#7a5c24;--line:#e4ddd2;--focus:#1d5fd6}
+/* Design A ("Navy Classic") theme. Colors and type from
+   /workspace/marketing/business-cards/build/build.py and proof-A-front/back.png.
+   Fonts are self-hosted in /fonts (see fonts/README.txt) so this site makes
+   no third-party font requests. */
+@font-face{
+  font-family:Gelasio;
+  src:url("fonts/Gelasio-Variable.woff2") format("woff2") tech("variations"),
+      url("fonts/Gelasio-Variable.woff2") format("woff2");
+  font-weight:400 700;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:Gelasio;
+  src:url("fonts/Gelasio-Italic-Variable.woff2") format("woff2") tech("variations"),
+      url("fonts/Gelasio-Italic-Variable.woff2") format("woff2");
+  font-weight:400 700;
+  font-style:italic;
+  font-display:swap;
+}
+@font-face{
+  font-family:Inter;
+  src:url("fonts/Inter-Variable.woff2") format("woff2") tech("variations"),
+      url("fonts/Inter-Variable.woff2") format("woff2");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+@font-face{
+  font-family:Inter;
+  src:url("fonts/Inter-Italic-Variable.woff2") format("woff2") tech("variations"),
+      url("fonts/Inter-Italic-Variable.woff2") format("woff2");
+  font-weight:100 900;
+  font-style:italic;
+  font-display:swap;
+}
+
+:root{
+  --navy:#162033;
+  --ink:#1c2430;
+  --paper:#f7f4ee;
+  --card:#fffcf7;
+  --muted:#5b6570;
+  --gold:#c4a36a;
+  --link:#7a5c24;
+  --line:#e4ddd2;
+  --tan:#e9dcc3;
+  --focus:#1d5fd6;
+  --serif:Gelasio,Georgia,"Times New Roman",serif;
+  --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
 *{box-sizing:border-box}
 html{font-size:100%}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-size:1.125rem;line-height:1.6;color:var(--ink);background:var(--paper)}
-h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.2;color:var(--navy)}
-h1{font-size:2.25rem;margin:.2em 0 .4em}h2{font-size:1.6rem;margin:1.6em 0 .5em}h3{font-size:1.2rem;margin:1.2em 0 .3em}
+body{
+  margin:0;
+  font-family:var(--sans);
+  font-size:1.125rem;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--paper);
+  font-synthesis:none;
+}
+h1,h2,h3{
+  font-family:var(--serif);
+  font-weight:500;
+  line-height:1.2;
+  color:var(--navy);
+}
+h1{font-size:2.25rem;margin:.2em 0 .4em}
+h2{font-size:1.6rem;margin:1.6em 0 .5em}
+h3{font-size:1.2rem;margin:1.2em 0 .3em}
+/* Short gold rule under headings, like Design A's title rule */
+h1::after,h2::after,h3::after{
+  content:"";
+  display:block;
+  width:2.2rem;
+  height:2px;
+  background:var(--gold);
+  margin:.45em 0 0;
+}
+h3::after{width:1.5rem;height:1.5px;margin:.35em 0 0}
 a{color:var(--link);text-underline-offset:2px}
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{
+  outline:3px solid var(--focus);
+  outline-offset:2px;
+}
+header.site a:focus-visible,
+.hero a:focus-visible,
+footer.site a:focus-visible{
+  outline-color:#fff;
+}
 .skip{position:absolute;left:-999px;top:0;background:#fff;color:var(--navy);padding:.6rem 1rem;z-index:100;font-weight:600}
 .skip:focus{left:.5rem;top:.5rem}
-header.site{background:var(--navy);color:#fff;border-bottom:3px solid var(--gold)}
+
+/* Header lockup: Design A front — Gelasio name, letter-spaced gold title, short gold rule */
+header.site{
+  background:var(--navy);
+  color:#fff;
+  border-bottom:6px solid var(--gold);
+}
 .wrap{max-width:1100px;margin:0 auto;padding:0 1.25rem}
-.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;padding:.9rem 0}
-.brand{color:#fff;text-decoration:none;font-family:Georgia,serif;font-size:1.3rem;line-height:1.2}
-.brand small{display:block;font-family:system-ui,sans-serif;font-size:.85rem;color:#e9dcc3}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.9rem 1rem;padding-top:1.05rem;padding-bottom:1.1rem}
+.brand{color:#fff;text-decoration:none;font-family:var(--serif);font-size:1.45rem;line-height:1.1;letter-spacing:.015em}
+.brand:hover,.brand:focus-visible{color:#fff;text-decoration:none}
+.brand-name{display:block}
+.brand small{display:block;font-family:var(--sans)}
+.brand-title{
+  display:block;
+  font-size:.72rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:600;
+  margin-top:.28em;
+  line-height:1.2;
+}
+.brand-title::after{
+  content:"";
+  display:block;
+  width:2.2rem;
+  height:2px;
+  background:var(--gold);
+  margin:.45em 0 .4em;
+}
+.brand-sep{display:none}
+.brand-loc{
+  display:block;
+  font-size:.78rem;
+  font-weight:400;
+  letter-spacing:.02em;
+  color:var(--tan);
+  text-transform:none;
+}
 nav.main ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.25rem 1.1rem}
-nav.main a{color:#fff;text-decoration:none;display:inline-block;padding:.35rem 0;min-height:24px}
-nav.main a[aria-current=page]{border-bottom:2px solid var(--gold)}
+nav.main a{color:#fff;text-decoration:none;display:inline-block;padding:.35rem 0;min-height:24px;font-weight:500}
+nav.main a:hover{color:var(--tan)}
+nav.main a[aria-current=page]{border-bottom:2px solid var(--gold);color:#fff}
 .cta{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
-.btn{display:inline-block;padding:.65rem 1.1rem;border-radius:6px;font-weight:600;text-decoration:none;border:2px solid transparent;min-height:44px;font-size:1rem;cursor:pointer}
+.btn{
+  display:inline-block;
+  padding:.65rem 1.1rem;
+  border-radius:4px;
+  font-family:var(--sans);
+  font-weight:600;
+  text-decoration:none;
+  border:2px solid transparent;
+  min-height:44px;
+  font-size:1rem;
+  cursor:pointer;
+}
 .btn-primary{background:var(--gold);color:var(--navy)}
-.btn-primary:hover{background:#d4b57f}
-.btn-ghost{border-color:#fff;color:#fff}
+.btn-primary:hover{background:#d4b57f;color:var(--navy)}
+.btn-ghost{border-color:#fff;color:#fff;background:transparent}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
 .btn-dark{background:var(--navy);color:#fff}
+.btn-dark:hover{background:#1f2c44;color:#fff}
 .btn-outline{border-color:var(--navy);color:var(--navy);background:transparent}
-.hero{background:var(--navy);color:#fff;padding:2.5rem 0 3rem}
-.hero h1{color:#fff}
+.btn-outline:hover{background:var(--navy);color:#fff}
+
+/* Hero continues the navy field; gold bar sits under the hero like the card's gold band */
+.hero{background:var(--navy);color:#fff;padding:2.5rem 0 3rem;border-bottom:6px solid var(--gold);margin-top:-6px}
+.hero h1{color:#fff;max-width:46rem}
+.hero h1::after{background:var(--gold)}
 .hero p{color:#eef0f3;max-width:46rem}
-.hero h1{max-width:46rem}
 .lead{max-width:48rem}
 .cards.contact-cards{grid-template-columns:repeat(2,1fr)}
 .contact-cards h2{margin-top:0}
@@ -36,48 +171,107 @@ main{padding:1.5rem 0 3rem}
 .cards-5 .card{grid-column:span 2}
 .cards-5 .card:nth-child(4){grid-column:2 / span 2}
 .cards-5 .card:nth-child(5){grid-column:4 / span 2}
-.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:1.1rem 1.2rem}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:1.1rem 1.2rem;
+  border-top:3px solid var(--gold);
+}
 .card h3{margin-top:0}
 .card p{margin:.3rem 0;color:var(--ink)}
+/* Whole practice-area card is the hit area; the title remains the accessible link. */
+.cards-5 .card{position:relative}
+.cards-5 .card h3 a{
+  color:var(--link);
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+.cards-5 .card h3 a::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+}
+.cards-5 .card:hover{border-color:var(--gold)}
+.cards-5 .card:focus-within{
+  outline:3px solid var(--focus);
+  outline-offset:2px;
+}
+.cards-5 .card h3 a:focus-visible{outline:none}
 .price{font-weight:700;color:var(--navy)}
 .note{background:var(--card);border-left:4px solid var(--link);padding:.8rem 1rem;border-radius:4px;margin:1rem 0}
 .warn{background:#fff4e0;border:2px solid #8a5a00;padding:1rem;border-radius:6px;margin:1rem 0}
 table{width:100%;border-collapse:collapse;background:var(--card);margin:.6rem 0 1rem;font-size:1rem}
-caption{text-align:left;font-weight:600;padding:.4rem 0;color:var(--navy)}
+caption{text-align:left;font-weight:600;padding:.4rem 0;color:var(--navy);font-family:var(--serif)}
 th,td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left;vertical-align:top}
-th{background:#ece5d8;color:var(--navy)}
+th{background:var(--tan);color:var(--navy);font-family:var(--sans);font-weight:600}
 td.num{white-space:nowrap}
 .steps{counter-reset:s;list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.steps li{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:1rem}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:1rem;border-top:3px solid var(--gold)}
 .steps li::before{counter-increment:s;content:"Step " counter(s);display:block;font-weight:700;color:var(--link);font-size:.95rem}
-.steps li.current{border:2px solid var(--navy)}
-fieldset{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:1rem 1.2rem;margin:1rem 0}
-legend{font-weight:700;color:var(--navy);padding:0 .3rem}
+.steps li.current{border:2px solid var(--navy);border-top:3px solid var(--gold)}
+fieldset{border:1px solid var(--line);border-radius:4px;background:var(--card);padding:1rem 1.2rem;margin:1rem 0}
+legend{font-weight:700;color:var(--navy);padding:0 .3rem;font-family:var(--serif)}
 label{display:block;font-weight:600;margin:.8rem 0 .25rem}
 .hint{display:block;font-weight:400;color:var(--muted);font-size:.95rem}
-input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea{width:100%;max-width:34rem;padding:.6rem;border:2px solid #6b7480;border-radius:6px;font:inherit;background:#fff;color:var(--ink);min-height:44px}
+input[type=text],input[type=email],input[type=tel],input[type=date],select,textarea{
+  width:100%;max-width:34rem;padding:.6rem;border:2px solid #6b7480;border-radius:4px;font:inherit;background:#fff;color:var(--ink);min-height:44px
+}
 .radio{display:flex;gap:.5rem;align-items:flex-start;margin:.4rem 0;font-weight:400}
 .radio input{width:24px;height:24px;margin-top:.15rem}
-footer.site{background:var(--navy);color:#eef0f3;padding:2rem 0;font-size:.95rem;border-top:3px solid var(--gold)}
+
+/* Footer: navy field and gold bar, typography aligned with the card */
+footer.site{
+  background:var(--navy);
+  color:#eef0f3;
+  padding:2.15rem 0 2.35rem;
+  font-size:.95rem;
+  border-top:6px solid var(--gold);
+}
 footer.site a{color:#f0dcb4}
+footer.site a:hover{color:var(--gold)}
 footer.site p{margin:.5rem 0}
+footer.site strong{font-family:var(--serif);font-weight:600;color:#fff}
 .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .small{font-size:.95rem;color:var(--muted)}
+footer.site .small{color:#cfd5dd}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2.5rem;align-items:center}
 .hero-photo{display:block}
-.hero-photo img{display:block;width:100%;height:auto;border-radius:8px;border:3px solid var(--gold)}
-.about{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:2rem;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:1.25rem;margin:2rem 0}
-.about-photo img{display:block;width:100%;height:auto;border-radius:6px}
+.hero-photo img{display:block;width:100%;height:auto;border-radius:4px;border:3px solid var(--gold)}
+.about{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+  gap:2rem;
+  align-items:center;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:1.25rem;
+  margin:2rem 0;
+  border-top:3px solid var(--gold);
+}
+.about-photo img{display:block;width:100%;height:auto;border-radius:4px}
 .about-text h2{margin-top:0}
 .about-text p{margin:.5rem 0}
 @media (max-width:760px){
- .hero-grid,.about{grid-template-columns:1fr;gap:1.25rem}
- .hero-photo{max-width:200px;justify-self:center;grid-row:1}
- .about{padding:1rem}
- h1{font-size:1.75rem}
- .cards,.cards-5,.cards.contact-cards,.steps,.foot-grid{grid-template-columns:1fr}
- .cards-5 .card,.cards-5 .card:nth-child(4),.cards-5 .card:nth-child(5){grid-column:auto}
+  .hero-grid,.about{grid-template-columns:1fr;gap:1.25rem}
+  .hero-photo{max-width:200px;justify-self:center;grid-row:1}
+  .about{padding:1rem}
+  h1{font-size:1.75rem}
+  .brand{font-size:1.3rem}
+  .cards,.cards-5,.cards.contact-cards,.steps,.foot-grid{grid-template-columns:1fr}
+  .cards-5 .card,.cards-5 .card:nth-child(4),.cards-5 .card:nth-child(5){grid-column:auto}
   table{font-size:.95rem}
- .table-scroll{overflow-x:auto}
+  .table-scroll{overflow-x:auto}
+  .bar{padding-top:.85rem;padding-bottom:1rem}
+  header.site .brand,
+  header.site nav.main,
+  header.site .cta{flex:1 1 100%;min-width:0}
+  header.site nav.main ul{gap:.35rem .7rem}
+  header.site .cta .btn{flex:1 1 100%;text-align:center}
+}
+@media (min-width:761px){
+  header.site .bar{flex-wrap:nowrap}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
