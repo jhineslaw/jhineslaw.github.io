@@ -273,6 +273,8 @@ footer.site .small{color:#cfd5dd}
 }
 @media (min-width:761px){
   header.site .bar{flex-wrap:nowrap}
+}
+@media (min-width:1024px){
   nav.main ul{flex-wrap:nowrap} nav.main a,header.site .cta .btn{white-space:nowrap} header.site .cta{flex-wrap:nowrap}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
