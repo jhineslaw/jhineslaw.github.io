@@ -5,8 +5,8 @@
   'use strict';
   var FORM_MODE = 'mailto'; // 'mailto' (default) | 'gform' (option b; only after approval)
   var MAILTO_TO = 'lawoffice@jhineslaw.com';
-  // cc order = drop order if a long request would exceed MAILTO_MAX (grokbot cc dropped first, then Gmail). See FORM-OPTIONS.md.
-  var MAILTO_CC = ['zd14c5tj+lawoffice@mail.grokbot.com', 'attyjasonrhines@gmail.com'];
+  // No public cc (Marketing 6:32 PM CT): recipients other than lawoffice@ must not appear in page source. See FORM-OPTIONS.md.
+  var MAILTO_CC = [];
   var MAILTO_MAX = 2000; // conservative mailto URL length budget (chars)
   var GFORM = { action: '', fields: {} }; // e.g. { action: 'https://docs.google.com/forms/d/e/<ID>/formResponse', fields: { first: 'entry.111', ... } }
 
