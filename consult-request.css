@@ -18,3 +18,5 @@
 .request .notice{background:#eef3fb;border-left:4px solid #2b6cb0;padding:.6rem .8rem}
 .request .ack .choice{font-size:.95rem}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.request .sms-consent .choice{font-size:.95rem}
+.request #consult-fee{font-size:.95rem;margin:.25rem 0 1rem}

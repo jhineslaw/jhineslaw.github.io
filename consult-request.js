@@ -33,7 +33,8 @@
       first: val('first'), last: val('last'), phone: val('phone'), email: val('email'),
       matter: val('matter'), othertype: val('othertype'), county: val('county'), parties: parties,
       language: val('language'), interp: val('interp'), interplang: val('interplang'),
-      time: val('time'), ack: form.elements.ack.checked
+      time: val('time'), ack: form.elements.ack.checked,
+      sms: !!(form.elements.sms && form.elements.sms.checked)
     };
   }
   function validate(d) {
@@ -65,6 +66,7 @@
       'Interpreter needed: ' + d.interp + (d.interp === 'Yes' && d.interplang ? ' (' + d.interplang + ')' : ''),
       'Preferred days or times (request only): ' + (d.time || '-'),
       'Acknowledgment checked: Yes',
+      'SMS consent: ' + (d.sms ? 'Yes' : 'No'),
       'Source: jhineslaw.com consult request form'
     ];
   }
@@ -79,7 +81,7 @@
       var b = new URLSearchParams();
       var flat = { first: d.first, last: d.last, phone: d.phone, email: d.email, matter: d.matter,
                othertype: d.othertype, county: d.county, parties: d.parties.join('; '), language: d.language,
-               interp: d.interp, interplang: d.interplang, time: d.time, ack: 'Yes' };
+               interp: d.interp, interplang: d.interplang, time: d.time, ack: 'Yes', sms: d.sms ? 'Yes' : 'No' };
       Object.keys(GFORM.fields).forEach(function (k) { if (flat[k] !== undefined) b.append(GFORM.fields[k], flat[k]); });
       fetch(GFORM.action, { method: 'POST', mode: 'no-cors', body: b })
         .then(function () { finish(); })
