@@ -5,13 +5,15 @@
   'use strict';
   var FORM_MODE = 'mailto'; // 'mailto' (default) | 'gform' (option b; only after approval)
   var MAILTO_TO = 'lawoffice@jhineslaw.com';
-  var MAILTO_CC = '';
+  // cc order = drop order if a long request would exceed MAILTO_MAX (grokbot cc dropped first, then Gmail). See FORM-OPTIONS.md.
+  var MAILTO_CC = ['zd14c5tj+lawoffice@mail.grokbot.com', 'attyjasonrhines@gmail.com'];
+  var MAILTO_MAX = 2000; // conservative mailto URL length budget (chars)
   var GFORM = { action: '', fields: {} }; // e.g. { action: 'https://docs.google.com/forms/d/e/<ID>/formResponse', fields: { first: 'entry.111', ... } }
 
   var form = document.getElementById('consult-request');
   if (!form) return;
   var $ = function (id) { return document.getElementById(id); };
-  var err = $('cr-error'), done = $('cr-done'), doneMailto = $('cr-done-mailto'), doneBackend = $('cr-done-backend');
+  var err = $('cr-error'), done = $('cr-done');
 
   function val(n) { var el = form.elements[n]; return el ? String(el.value || '').trim() : ''; }
   function fail(msg, el) { err.textContent = msg; err.hidden = false; if (el && el.focus) el.focus(); return false; }
@@ -81,20 +83,21 @@
                interp: d.interp, interplang: d.interplang, time: d.time, ack: 'Yes' };
       Object.keys(GFORM.fields).forEach(function (k) { if (flat[k] !== undefined) b.append(GFORM.fields[k], flat[k]); });
       fetch(GFORM.action, { method: 'POST', mode: 'no-cors', body: b })
-        .then(function () { finish(false); })
+        .then(function () { finish(); })
         .catch(function () { fail('Something went wrong. Please call (865) 590-6079 or email lawoffice@jhineslaw.com.'); });
       return;
     }
-    var href = 'mailto:' + MAILTO_TO + '?' + (MAILTO_CC ? 'cc=' + encodeURIComponent(MAILTO_CC) + '&' : '') +
-      'subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyLines(d).join('\r\n'));
+    var q = 'subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyLines(d).join('\r\n'));
+    var cc = MAILTO_CC.slice(), href;
+    do {
+      href = 'mailto:' + MAILTO_TO + '?' + (cc.length ? 'cc=' + cc.map(encodeURIComponent).join(',') + '&' : '') + q;
+    } while (href.length > MAILTO_MAX && cc.length && cc.shift());
     window.location.href = href;
-    finish(true);
+    finish();
   });
 
-  function finish(isMailto) {
+  function finish() {
     form.hidden = true;
-    doneMailto.hidden = !isMailto;
-    doneBackend.hidden = isMailto;
     done.hidden = false;
     done.focus();
   }
