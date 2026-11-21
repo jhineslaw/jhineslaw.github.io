@@ -22,7 +22,6 @@
   function sync() {
     var m = val('matter'), i = val('interp');
     $('cr-other-wrap').hidden = m !== 'Other';
-    $('cr-imm-notice').hidden = m !== 'Immigration';
     $('cr-interp-lang-wrap').hidden = i !== 'Yes';
   }
   form.addEventListener('change', sync);
@@ -75,7 +74,7 @@
     err.hidden = true;
     var d = collect();
     if (validate(d) !== true) return;
-    var subject = '[INTAKE ACTION] ' + matterLabel(d) + ' \u2014 ' + d.county + ' \u2014 ' + d.first + ' ' + d.last;
+    var subject = 'Consultation request — ' + matterLabel(d) + ' \u2014 ' + d.county + ' \u2014 ' + d.first + ' ' + d.last;
     if (FORM_MODE === 'gform' && GFORM.action) {
       var b = new URLSearchParams();
       var flat = { first: d.first, last: d.last, phone: d.phone, email: d.email, matter: d.matter,
