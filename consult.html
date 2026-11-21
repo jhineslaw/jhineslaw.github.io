@@ -7,6 +7,8 @@
 <meta name="description" content="Request a consultation with Jason R. Hines, Attorney at Law, by phone at (865) 590-6079 or by email at lawoffice@jhineslaw.com.">
 <link rel="canonical" href="https://jhineslaw.com/consult.html">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="consult-request.css">
+<script src="consult-request.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to main content</a>
@@ -14,7 +16,7 @@
 <div class="wrap bar">
 <a class="brand" href="index.html"><span class="brand-name">Jason R. Hines</span><small><span class="brand-title">Attorney at Law</span><span class="brand-sep"> · </span><span class="brand-loc">Harriman, TN · Serving East Tennessee</span></small></a>
 <nav class="main" aria-label="Main">
-<ul><li><a href="index.html">Home</a></li><li><a href="family-law.html">Family Law</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="consult.html" aria-current="page">Book a Consult</a></li></ul>
+<ul><li><a href="index.html">Home</a></li><li><a href="family-law.html">Family Law</a></li><li><a href="immigration.html">Immigration</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="consult.html" aria-current="page">Book a Consult</a></li></ul>
 </nav>
 <div class="cta">
 <a class="btn btn-ghost" href="tel:+18655906079">Call (865) 590-6079</a>
@@ -24,7 +26,7 @@
 </header>
 <main id="main" class="wrap" tabindex="-1">
 <h1>Book a consultation</h1>
-<p>Request a consultation by phone or email. We'll respond as soon as possible.</p>
+<p>Request a consultation online, by phone, or by email.</p>
 <div class="warn" id="rpc118" role="note">
 <p><strong>Please do not send confidential details until we confirm we can help.</strong> Contacting us does not make you a client of Jason R. Hines, Attorney at Law, and does not mean we have agreed to take your case. When you first reach out, we only need your name, how to reach you, the type of matter, the county, and the names of the other people involved, so we can check for conflicts of interest. If we find a conflict, we may be unable to help you. Until we agree in a signed written agreement to represent you, we are not responsible for any deadline in your matter.</p>
 </div>
@@ -32,9 +34,48 @@
 <div class="card"><h2>Call</h2><p><a class="btn btn-dark" href="tel:+18655906079">(865) 590-6079</a></p><p>If we can't answer, leave your name, phone number, and the type of matter.</p></div>
 <div class="card"><h2>Email</h2><p><a class="btn btn-dark" href="mailto:lawoffice@jhineslaw.com?subject=Consultation%20request">lawoffice@jhineslaw.com</a></p><p>Include only your name, phone number, the type of matter, the county, and the other party's name. Please don't attach documents yet.</p></div>
 </div>
+<section id="request" class="request" aria-labelledby="request-heading">
+<h2 id="request-heading">Request a consultation online</h2>
+<p>Fill in the short form below. We use it only to check for conflicts of interest and to contact you to schedule. We do not post open appointment times; we'll contact you to set one up.</p>
+<p class="form-note" id="form-method-note">This form opens your email app with your request filled in, and you press Send. If you'd rather not use email, call <a href="tel:+18655906079">(865) 590-6079</a>.</p>
+<form id="consult-request" novalidate data-mode="mailto">
+<div class="field"><label for="cr-name">Your name <span class="req">(required)</span></label><input id="cr-name" name="name" type="text" autocomplete="name" maxlength="100" required></div>
+<fieldset class="field"><legend>How can we reach you? <span class="req">(give at least one)</span></legend>
+<div class="field"><label for="cr-phone">Phone</label><input id="cr-phone" name="phone" type="tel" autocomplete="tel" maxlength="30"></div>
+<div class="field"><label for="cr-email">Email</label><input id="cr-email" name="email" type="email" autocomplete="email" maxlength="120"></div>
+</fieldset>
+<div class="field"><label for="cr-matter">Type of matter <span class="req">(required)</span></label>
+<select id="cr-matter" name="matter" required>
+<option value="">Choose one</option>
+<option>Criminal defense</option>
+<option>Family law</option>
+<option>Wills, trusts, estates, or deeds</option>
+<option>Immigration</option>
+<option>Business, contracts, landlord evictions, or other civil matter</option>
+<option>Not sure</option>
+</select></div>
+<div class="field"><label for="cr-county">County (optional)</label><input id="cr-county" name="county" type="text" maxlength="60"></div>
+<div class="field"><label for="cr-others">Names of the other people involved (optional)</label><input id="cr-others" name="others" type="text" maxlength="200"><p class="hint">Names only, so we can check for conflicts of interest.</p></div>
+<div class="field"><label for="cr-time">Best time to contact you</label>
+<select id="cr-time" name="time">
+<option>No preference</option>
+<option>Morning</option>
+<option>Afternoon</option>
+</select></div>
+<div class="field"><label for="cr-msg">Short message (optional)</label><textarea id="cr-msg" name="message" rows="3" maxlength="500" aria-describedby="cr-msg-warn"></textarea>
+<p class="hint warn-inline" id="cr-msg-warn">Please do not include confidential details, documents, or facts about your case. Do not enter a Social Security number, A-number, date of birth, or case number.</p></div>
+<p class="form-error" id="cr-error" role="alert" hidden></p>
+<p><button type="submit" class="btn btn-dark">Request a consultation</button></p>
+</form>
+<div id="cr-done" class="form-done" role="status" tabindex="-1" hidden>
+<p id="cr-done-mailto" hidden><strong>Almost done:</strong> your email app should open with your request filled in. Please press Send there. If it didn't open, call <a href="tel:+18655906079">(865) 590-6079</a> or email <a href="mailto:lawoffice@jhineslaw.com">lawoffice@jhineslaw.com</a>.</p>
+<p><strong>Thanks, we'll contact you to schedule.</strong></p>
+</div>
+</section>
+
 <h2>Consultations</h2>
 <ul>
-<li>A 30-minute phone consultation is free. A video consultation is $50 for 30 minutes or $100 for an hour. Immigration video consults use the same fees. The actual length of a consult may vary depending on the facts. If a 30-minute video consult runs long, the fee doesn't go up; we decide case by case whether to go past 30 minutes. The fee is nonrefundable, but we refund it if we cancel, and if you cancel or miss your consult, you can reschedule once. If you hire us, we credit the consult fee toward our fee. You'll sign a short acknowledgment of these terms when you book. A 10% discount may apply; see <a href="pricing.html">our pricing page</a>.</li>
+<li>Phone and video consultations are available. Immigration appointments are held by video. We'll tell you about any fee before we schedule. Every case is quoted in writing after a consultation. A 10% discount on attorney fees may apply; see <a href="pricing.html#veterans">our pricing page</a>.</li>
 </ul>
 <h2>What happens next</h2>
 <ol>
