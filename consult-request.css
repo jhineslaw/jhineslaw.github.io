@@ -10,3 +10,11 @@
 .request .form-note{font-size:.95rem}
 .request .form-error{color:#9b1c1c;font-weight:600}
 .request .form-done{padding:1rem;border-left:4px solid #2f6f3e;background:#eef7f0}
+.request .choice{display:block;font-weight:400;margin:.25rem 0}
+.request .choice input{width:auto;margin-right:.4rem}
+.request .row2{display:flex;gap:1rem;flex-wrap:wrap}.request .row2 .field{flex:1 1 14rem}
+.request fieldset input[type=text]{margin-bottom:.4rem}
+.request .urgent-msg{background:#fdecea;border-left:4px solid #9b1c1c;padding:.6rem .8rem;margin:.6rem 0 0}
+.request .notice{background:#eef3fb;border-left:4px solid #2b6cb0;padding:.6rem .8rem}
+.request .ack .choice{font-size:.95rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
