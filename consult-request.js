@@ -33,7 +33,7 @@
       first: val('first'), last: val('last'), phone: val('phone'), email: val('email'),
       matter: val('matter'), othertype: val('othertype'), county: val('county'), parties: parties,
       language: val('language'), interp: val('interp'), interplang: val('interplang'),
-      time: val('time'), ack: form.elements.ack.checked,
+      time: val('time'), hear: val('hear'), ack: form.elements.ack.checked,
       sms: !!(form.elements.sms && form.elements.sms.checked)
     };
   }
@@ -48,7 +48,7 @@
     if (!d.parties.length) return fail('Please list the other people or businesses involved, or write “none” or “I don\'t know.”', form.elements.party1);
     if (!d.language) return fail('Please choose a preferred language.', form.elements.language);
     if (!d.interp) return fail('Please tell us whether you may need an interpreter.', form.querySelector('input[name=interp]'));
-    if ([d.time, d.parties.join(' '), d.othertype].some(sensitive)) return fail('Please remove any Social Security number or A-number.', form.elements.time);
+    if ([d.time, d.hear, d.parties.join(' '), d.othertype].some(sensitive)) return fail('Please remove any Social Security number or A-number.', form.elements.time);
     if (!d.ack) return fail('Please check the box to confirm you understand.', form.elements.ack);
     return true;
   }
@@ -65,10 +65,73 @@
       'Preferred language: ' + d.language,
       'Interpreter needed: ' + d.interp + (d.interp === 'Yes' && d.interplang ? ' (' + d.interplang + ')' : ''),
       'Preferred days or times (request only): ' + (d.time || '-'),
+      'How did you hear about us: ' + (d.hear || '-'),
       'Acknowledgment checked: Yes',
       'SMS consent: ' + (d.sms ? 'Yes' : 'No'),
       'Source: jhineslaw.com consult request form'
     ];
+  }
+
+
+  var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'];
+
+  function sanitizeUtm(raw) {
+    return String(raw || '').toLowerCase().replace(/[^a-z0-9._-]/g, '').slice(0, 60);
+  }
+
+  function utmsFromSearch(search) {
+    var out = {}, params, i, k, v;
+    try {
+      params = new URLSearchParams(search || '');
+      for (i = 0; i < UTM_KEYS.length; i++) {
+        k = UTM_KEYS[i];
+        v = sanitizeUtm(params.get(k));
+        if (v) out[k] = v;
+      }
+    } catch (e) {}
+    return out;
+  }
+
+  function hasUtms(obj) {
+    var i;
+    if (!obj) return false;
+    for (i = 0; i < UTM_KEYS.length; i++) {
+      if (obj[UTM_KEYS[i]]) return true;
+    }
+    return false;
+  }
+
+  function readUtms() {
+    var fromUrl, ref, refUrl;
+    fromUrl = utmsFromSearch(window.location.search);
+    if (hasUtms(fromUrl)) return fromUrl;
+    ref = document.referrer;
+    if (!ref) return {};
+    refUrl = new URL(ref);
+    if (refUrl.origin !== window.location.origin) return {};
+    return utmsFromSearch(refUrl.search);
+  }
+
+  function linkTagsLine() {
+    var u, parts, i, k;
+    var labels = { utm_source: 'source', utm_medium: 'medium', utm_campaign: 'campaign', utm_content: 'content' };
+    u = readUtms();
+    if (!hasUtms(u)) return null;
+    parts = [];
+    for (i = 0; i < UTM_KEYS.length; i++) {
+      k = UTM_KEYS[i];
+      if (u[k]) parts.push(labels[k] + '=' + u[k]);
+    }
+    return parts.length ? ('Link tags: ' + parts.join('; ')) : null;
+  }
+
+  function formBodyText(d) {
+    return bodyLines(d).join('\r\n');
+  }
+
+  function buildMailtoHref(subject, body, cc) {
+    var q = 'subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    return 'mailto:' + MAILTO_TO + '?' + (cc.length ? 'cc=' + cc.map(encodeURIComponent).join(',') + '&' : '') + q;
   }
 
   form.addEventListener('submit', function (e) {
@@ -88,11 +151,29 @@
         .catch(function () { fail('Something went wrong. Please call (865) 590-6079 or email lawoffice@jhineslaw.com.'); });
       return;
     }
-    var q = 'subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(bodyLines(d).join('\r\n'));
-    var cc = MAILTO_CC.slice(), href;
-    do {
-      href = 'mailto:' + MAILTO_TO + '?' + (cc.length ? 'cc=' + cc.map(encodeURIComponent).join(',') + '&' : '') + q;
-    } while (href.length > MAILTO_MAX && cc.length && cc.shift());
+    var body, tagLine, cc, href, bodyForHref;
+    try {
+      body = formBodyText(d);
+    } catch (e) {
+      body = bodyLines(d).join('\r\n');
+    }
+    try {
+      tagLine = linkTagsLine();
+    } catch (e2) {
+      tagLine = null;
+    }
+    cc = MAILTO_CC.slice();
+    bodyForHref = tagLine ? (body + '\r\n' + tagLine) : body;
+    href = buildMailtoHref(subject, bodyForHref, cc);
+    // If the href exceeds the 2,000-character budget, drop the link-tags line first. Never block submit.
+    if (href.length > MAILTO_MAX && tagLine) {
+      bodyForHref = body;
+      href = buildMailtoHref(subject, bodyForHref, cc);
+    }
+    while (href.length > MAILTO_MAX && cc.length) {
+      cc.shift();
+      href = buildMailtoHref(subject, bodyForHref, cc);
+    }
     window.location.href = href;
     finish();
   });
